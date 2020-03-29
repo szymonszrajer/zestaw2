@@ -1,0 +1,23 @@
+package academy.learnprogramming;
+
+public class Main {
+
+    public static void main(String[] args) {
+        String input  = "ATGCTGCATTCTTAGCAAG";
+        int[] countArray = new int[4];
+        countArray = counter(input, countArray);
+        System.out.println("#A:" + countArray[0] +  " #C:" + countArray[1]
+                + " #G:" + countArray[2] + " #T:" + countArray[3]);
+    }
+
+    public static int[] counter(String DNA, int[] arr) {
+        char[] array = DNA.toCharArray();
+        for ( char c: array ) {
+            if (c == 'A' ) arr[0]++;
+            else if (c == 'C' ) arr[1]++;
+            else if (c == 'G' ) arr[2]++;
+            else if (c == 'T' ) arr[3]++;
+        }
+        return arr;
+    }
+}
