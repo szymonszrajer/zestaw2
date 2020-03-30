@@ -1,0 +1,59 @@
+package academy.learnprogramming;
+
+public class Main {
+
+    public static void main(String[] args) {
+        String strA = "arrarrbrrrrrrrrrcrrrrrrrrrrd";
+        String strB = "afffffafffffffffbffffffffcfd";
+        int lenA = strA.length();
+        int lenB = strB.length();
+        LCS(strA, strB, lenA, lenB);
+    }
+    // longest common subsequence
+    static void LCS (String strA, String strB, int lenA, int lenB) {
+        int[][] array = new int[lenA + 1][lenB + 1];  // creating array +1 in size to skip 0
+
+        for (int i = 0; i <= lenA; i++) {
+            for (int j = 0; j <= lenB; j++) {
+                if (i == 0 || j == 0) {   // skip 0
+                    array[i][j] = 0;
+                }
+                else if (strA.charAt(i - 1) == strB.charAt(j - 1)) {
+                    array[i][j] = array[i - 1][j - 1] + 1;    // if equal add 1 to diagonally previous cell
+                }
+                else {
+                    // if chars aren't equal- choose bigger length and assign it to array[i][j]
+                    array[i][j] = Math.max(array[i - 1][j], array[i][j - 1]);
+                }
+            }
+        }
+
+        int index = array[lenA][lenB];        // after loops above array[lenA][lenB] stores length of lcs
+        int tmp = index;                      // assign this value to tmp- to print it later
+
+        char[] result = new char[index + 1];  // result char array
+        result[index] = '\0';                 // ending with '\0'
+
+        int i = lenA, j = lenB;
+        // creating result string 'backwards'
+        while (i > 0 && j > 0) {
+            if (strA.charAt(i - 1) == strB.charAt(j - 1)) {
+                result[index - 1] = strA.charAt(i - 1);
+                i--;
+                j--;
+                index--;
+            }
+            // deciding which way to move based on values in the array
+            else if (array[i - 1][j] > array[i][j - 1])
+                i--;
+            else
+                j--;
+        }
+
+        System.out.print("first string: " + strA + "\nsecond string: " + strB + "\nresult: ");
+        for (int k = 0; k <= tmp; k++) {
+            System.out.print(result[k]);  // printing result
+        }
+
+    }
+}
