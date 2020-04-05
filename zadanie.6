@@ -1,0 +1,19 @@
+package academy.learnprogramming;
+
+public class Main {
+
+    public static void main(String[] args) {
+	String StringA = "ATCGATCGAACCAAGGAATT";
+	String StringB = "ATCGATCGAACCTTAAGGTT";
+        System.out.println(HammingsDistance(StringA , StringB));
+    }
+
+    public static int HammingsDistance (String StrA, String StrB) {
+        int length = StrA.length();
+        int HDis = 0;
+        for (int i = 0; i < length; i++ ) {
+            if (StrA.charAt(i) != StrB.charAt(i)) HDis++;
+        }
+        return HDis;
+    }
+}
