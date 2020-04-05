@@ -1,0 +1,52 @@
+package academy.learnprogramming;
+import java.util.Random;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int n = 2;  // generation
+        int k = 3;  // rabbits per couple
+        int m = 4;  // lifespan
+        System.out.println(rabbits(n , k, m));
+        System.out.println(rabbits(3 , 2, 5));
+        System.out.println(rabbits(5,4, 5));
+        System.out.println(rabbits(4,5, 2));
+        System.out.println(rabbits(10,6, 5));  //numbers that big take a while (~10s)
+    }
+
+    public static int rabbits (int n , int k, int m) {
+        int buck = 1;  // starting point
+        int doe = 1;
+        int random = 0;
+        int temp = 0;   // 'couples' available at given moment/iteration
+
+        int[] buckdead = new int [m];  // to control how many bucks need to die at  given iteration
+        int[] doedead = new int [m];
+
+        for (int i = 0; i < n ; i ++ ) {  // for every iteration
+            buck -= buckdead[0];  // rabbits that die before this iteration
+            doe  -= doedead[0];
+            temp = Math.max(buck, doe);   // the couples available is max from doe/buck
+            for (int j = 0; j < temp; j++) {  // for every couple
+                for (int l = 0; l < k; l++) {   // for every child
+                    Random rand = new Random();
+                    random = rand.nextInt(1);   // decide
+                    if (random == 1) {  // whether it is a buck
+                        buck++;
+                        buckdead[m-1]++;
+                    } else  {  // or a doe
+                        doe++;
+                        doedead[m-1]++;  // and also when it dies
+                    }
+                }
+            }
+            for ( int d = 1; d < m ; d++) {
+                buckdead[d-1] = buckdead[d];  // moving an array down- iteration
+                doedead[d-1] = doedead[d];   // cell[0] shows how many rabbits die at the beginning of the iteration
+            }
+            buckdead[m-1]=0;  // reseting the last cell of an array for a next iteration
+            doedead[m-1]=0;
+        }
+        return  buck+doe;
+    }
+}
